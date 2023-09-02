@@ -152,7 +152,19 @@ export const AuthProvider = (props) => {
   };
 
   const signUp = async (email, name, password) => {
-    throw new Error('Sign up is not implemented');
+    const user = {
+      email: email,
+      password: password
+    };
+
+    fetch('http://localhost:8000/user/signup', { // TODO Change url
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user)
+    }).then(function (response) {
+      console.log(response)
+      return response.json();
+    });
   };
 
   const signOut = () => {
