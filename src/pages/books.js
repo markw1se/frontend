@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Head from "next/head";
 import ArrowUpOnSquareIcon from "@heroicons/react/24/solid/ArrowUpOnSquareIcon";
 import ArrowDownOnSquareIcon from "@heroicons/react/24/solid/ArrowDownOnSquareIcon";
@@ -6,6 +7,12 @@ import {
   Box,
   Button,
   Container,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent as MuiDialogContent,
+  Menu,
+  MenuItem,
   Pagination,
   Stack,
   SvgIcon,
@@ -15,6 +22,69 @@ import {
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { BookmarkCard } from "src/sections/companies/bookmark-card";
 import { CompaniesSearch } from "src/sections/companies/companies-search";
+
+const OpenAddDomainModal = ({ open, onClose }) => {
+  const [InputDomain, setInputDomain] = useState('');
+  const [isCategoryMenuOpen, setCategoryMenuOpen] = useState(false);
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  const handleAdd = () => {
+  };
+
+   const handleCategoryMenuOpen = (event) => {
+    setCategoryMenuOpen(event.currentTarget);
+  };
+
+  const handleCategoryMenuItemClick = (category) => {
+    setInputDomain({ ...InputDomain, category });
+    setCategoryMenuOpen(null);
+  };
+
+  const UserCategory = ['Default', 'Sports', 'Movies', 'etc']
+
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Add Domain</DialogTitle>
+      <MuiDialogContent>
+        <input
+          type="text"
+          placeholder="Enter your favorite page here…"
+          value={InputDomain.value}
+          style={{ width: '100%' }}
+        />
+        <Button
+          variant="outlined"
+          onClick={handleCategoryMenuOpen}
+          sx={{ mt: 1}}
+        >
+          {InputDomain.category}
+        </Button>
+        <Menu
+          anchorEl={isCategoryMenuOpen}
+          open={Boolean(isCategoryMenuOpen)}
+          onClose={() => setCategoryMenuOpen(null)}
+        >
+          {UserCategory.map((item) => (
+            <MenuItem key={item} onClick={() => handleCategoryMenuItemClick(item)}>
+              {item}
+            </MenuItem>
+          ))}
+        </Menu>
+      </MuiDialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="secondary">
+          Cancel
+        </Button>
+        <Button onClick={handleAdd} color="primary">
+          Add
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
 
 const bookmarks = [
   {
@@ -37,8 +107,19 @@ const bookmarks = [
   },
 ];
 
-const Page = () => (
-  <>
+const Page = () => {
+  const [isAddDomainModalOpen, setAddDomainModalOpen] = useState(false);
+
+  const handleOpenAddDomainModal = () => {
+    setAddDomainModalOpen(true);
+  };
+
+  const handleCloseAddDomainModal = () => {
+    setAddDomainModalOpen(false);
+  };
+
+  return (
+    <>
     <Head>
       <title>Books</title>
     </Head>
@@ -53,6 +134,18 @@ const Page = () => (
         <Stack spacing={3}>
           <Stack direction="row" justifyContent="space-between" spacing={4}>
             <Stack spacing={1}>
+                <div>
+                  <Button
+                    startIcon={(
+                      <SvgIcon fontSize="small">
+                        <PlusIcon />
+                      </SvgIcon>
+                    )}
+                    variantvariant="contained"
+                    onClick={handleOpenAddDomainModal}
+                  > Add
+                  </Button>
+                </div>
               <Typography variant="h4">Books</Typography>
             </Stack>
           </Stack>
@@ -74,9 +167,13 @@ const Page = () => (
         </Stack>
       </Container>
     </Box>
+    <OpenAddDomainModal
+        open={isAddDomainModalOpen}
+        onClose={handleCloseAddDomainModal}
+    />
   </>
 );
-
+};
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Page;
