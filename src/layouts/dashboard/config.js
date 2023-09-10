@@ -22,22 +22,4 @@ export const items = [
       </SvgIcon>
     ),
   },
-  {
-    title: "Podcasts",
-    path: "/podcasts",
-    icon: (
-      <SvgIcon fontSize="small">
-        <ShoppingBagIcon />
-      </SvgIcon>
-    ),
-  },
-  {
-    title: "Account",
-    path: "/account",
-    icon: (
-      <SvgIcon fontSize="small">
-        <UserIcon />
-      </SvgIcon>
-    ),
-  },
 ];
