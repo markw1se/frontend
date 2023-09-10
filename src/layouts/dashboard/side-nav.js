@@ -26,20 +26,20 @@ export const SideNav = (props) => {
   const content = (
     <Scrollbar
       sx={{
-        height: '100%',
-        '& .simplebar-content': {
-          height: '100%'
+        height: "100%",
+        "& .simplebar-content": {
+          height: "100%",
         },
-        '& .simplebar-scrollbar:before': {
-          background: 'neutral.400'
-        }
+        "& .simplebar-scrollbar:before": {
+          background: "neutral.400",
+        },
       }}
     >
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%'
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
         }}
       >
         <Box sx={{ p: 3 }}>
@@ -47,67 +47,49 @@ export const SideNav = (props) => {
             component={NextLink}
             href="/"
             sx={{
-              display: 'inline-flex',
+              display: "inline-flex",
               height: 32,
-              width: 32
+              width: 32,
             }}
           >
             <Logo />
           </Box>
+
           <Box
             sx={{
-              alignItems: 'center',
-              backgroundColor: 'rgba(255, 255, 255, 0.04)',
-              borderRadius: 1,
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'space-between',
+              alignItems: "center",
               mt: 2,
-              p: '12px'
+              p: "12px",
             }}
           >
-            <div>
-              <Typography
-                color="inherit"
-                variant="subtitle1"
-              >
-                Devias
-              </Typography>
-              <Typography
-                color="neutral.400"
-                variant="body2"
-              >
-                Production
-              </Typography>
-            </div>
-            <SvgIcon
-              fontSize="small"
-              sx={{ color: 'neutral.500' }}
-            >
-              <ChevronUpDownIcon />
-            </SvgIcon>
+            <Typography color="inherit" variant="subtitle1">
+              Hi there, Anika
+            </Typography>
+            <Typography color="inherit" variant="subtitle1">
+              What can I help you with?
+            </Typography>
           </Box>
         </Box>
-        <Divider sx={{ borderColor: 'neutral.700' }} />
+        <Divider sx={{ borderColor: "neutral.700" }} />
         <Box
           component="nav"
           sx={{
             flexGrow: 1,
             px: 2,
-            py: 3
+            py: 3,
           }}
         >
           <Stack
             component="ul"
             spacing={0.5}
             sx={{
-              listStyle: 'none',
+              listStyle: "none",
               p: 0,
-              m: 0
+              m: 0,
             }}
           >
             {items.map((item) => {
-              const active = item.path ? (pathname === item.path) : false;
+              const active = item.path ? pathname === item.path : false;
 
               return (
                 <SideNavItem
@@ -123,57 +105,7 @@ export const SideNav = (props) => {
             })}
           </Stack>
         </Box>
-        <Divider sx={{ borderColor: 'neutral.700' }} />
-        <Box
-          sx={{
-            px: 2,
-            py: 3
-          }}
-        >
-          <Typography
-            color="neutral.100"
-            variant="subtitle2"
-          >
-            Need more features?
-          </Typography>
-          <Typography
-            color="neutral.500"
-            variant="body2"
-          >
-            Check out our Pro solution template.
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              mt: 2,
-              mx: 'auto',
-              width: '160px',
-              '& img': {
-                width: '100%'
-              }
-            }}
-          >
-            <img
-              alt="Go to pro"
-              src="/assets/devias-kit-pro.png"
-            />
-          </Box>
-          <Button
-            component="a"
-            endIcon={(
-              <SvgIcon fontSize="small">
-                <ArrowTopRightOnSquareIcon />
-              </SvgIcon>
-            )}
-            fullWidth
-            href="https://material-kit-pro-react.devias.io/"
-            sx={{ mt: 2 }}
-            target="_blank"
-            variant="contained"
-          >
-            Pro Live Preview
-          </Button>
-        </Box>
+        <Divider sx={{ borderColor: "neutral.700" }} />
       </Box>
     </Scrollbar>
   );
