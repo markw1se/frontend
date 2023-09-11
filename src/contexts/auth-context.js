@@ -126,23 +126,39 @@ export const AuthProvider = (props) => {
       payload: user
     });
   };
-
   const signIn = async (email, password) => {
-    if (email !== 'demo@devias.io' || password !== 'Password123!') {
-      throw new Error('Please check your email and password');
-    }
 
     try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
+      const response = await fetch('http://localhost:8000/user/login', { // Replace with your backend URL
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (response.status === 200) {
+        // Sign-in successful, handle user data as needed
+        const userData = await response.json();
+        console.log('Sign-in successful', userData);
+
+        // Store authentication status in session storage or a state variable
+        window.sessionStorage.setItem('authenticated', 'true');
+      } else {
+        // Sign-in failed, handle the error
+        const errorData = await response.json();
+        console.error('Sign-in failed', errorData);
+
+        // Handle the error, show a message, or perform other actions as needed
+      }
+    } catch (error) {
+      console.error('Sign-in error', error);
+      // Handle network errors or other exceptions
     }
 
     const user = {
       id: '5e86809283e28b96d2d38537',
       avatar: '/assets/avatars/avatar-anika-visser.png',
       name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
+      email: email,
     };
 
     dispatch({
@@ -152,19 +168,32 @@ export const AuthProvider = (props) => {
   };
 
   const signUp = async (email, name, password) => {
-    const user = {
-      email: email,
-      password: password
-    };
+    try {
+      const user = { email, password };
 
-    fetch('http://localhost:8000/user/signup', { // TODO Change url
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user)
-    }).then(function (response) {
-      console.log(response)
-      return response.json();
-    });
+      const response = await fetch('http://localhost:8000/user/signup', { // TODO Change url
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
+
+      if (response.status === 201) {
+        // Sign-up successful, you may choose to automatically sign in the user here
+        console.log('Sign-up successful');
+
+        // Optionally, trigger a sign-in using the signIn function
+        signIn(email, password);
+      } else {
+        // Sign-up failed, handle the error
+        const errorData = await response.json();
+        console.error('Sign-up failed', errorData);
+
+        // Handle the error, show a message, or perform other actions as needed
+      }
+    } catch (error) {
+      console.error('Sign-up error', error);
+      // Handle network errors or other exceptions
+    }
   };
 
   const signOut = () => {
