@@ -133,21 +133,23 @@ const Page = () => {
       <Container maxWidth="xl">
         <Stack spacing={3}>
           <Stack direction="row" justifyContent="space-between" spacing={4}>
-            <Stack spacing={1}>
-                <div>
-                  <Button
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <PlusIcon />
-                      </SvgIcon>
-                    )}
-                    variantvariant="contained"
-                    onClick={handleOpenAddDomainModal}
-                  > Add
-                  </Button>
-                </div>
-              <Typography variant="h4">Books</Typography>
-            </Stack>
+            <Typography variant="h4">Books</Typography>
+            <div>
+              <Button
+                startIcon={(
+                  <SvgIcon fontSize="small">
+                    <PlusIcon />
+                  </SvgIcon>
+                )}
+                variantvariant="contained"
+                onClick={handleOpenAddDomainModal}
+                sx={{
+                  marginLeft: 'auto',
+                  fontSize: '24px',
+                }}
+              > Add
+              </Button>
+            </div>
           </Stack>
           <Grid container spacing={3}>
             {bookmarks.map((bookmark) => (
